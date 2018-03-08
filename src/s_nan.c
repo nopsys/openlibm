@@ -28,7 +28,6 @@
 
 //VBS
 //#include <sys/endian.h>
-#include <ctype.h>
 #include <float.h>
 #include <openlibm_math.h>
 #include <stdint.h>
@@ -67,15 +66,15 @@ __scan_nan(u_int32_t *words, int num_words, const char *s)
 	int si;		/* index into s */
 	int bitpos;	/* index into words (in bits) */
 
-	memset(words, 0, num_words * sizeof(u_int32_t));
+	//memset(words, 0, num_words * sizeof(u_int32_t));
 
 	/* Allow a leading '0x'. (It's expected, but redundant.) */
 	if (s[0] == '0' && (s[1] == 'x' || s[1] == 'X'))
 		s += 2;
 
 	/* Scan forwards in the string, looking for the end of the sequence. */
-	for (si = 0; isxdigit(s[si]); si++)
-		;
+	//for (si = 0; isxdigit(s[si]); si++)
+	//	;
 
 	/* Scan backwards, filling in the bits in words[] as we go. */
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
