@@ -34,7 +34,7 @@ USEGCC = 0
 USECLANG = 1
 endif
 
-AR = ar
+AR = /Users/guidochari/opt/cross/bin/x86_64-elf-ar
 
 ifeq ($(USECLANG),1)
 USEGCC = 0
@@ -43,8 +43,8 @@ CFLAGS_add += -fno-builtin -fno-strict-aliasing
 endif
 
 ifeq ($(USEGCC),1)
-CC = gcc
-CFLAGS_add += -fno-gnu89-inline -fno-builtin
+CC = /Users/guidochari/opt/cross/bin/x86_64-elf-gcc
+CFLAGS_add += -fno-gnu89-inline -fno-builtin -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector
 endif
 
 ARCH ?= $(shell $(CC) -dumpmachine | sed "s/\([^-]*\).*$$/\1/")
@@ -82,23 +82,10 @@ ifneq (,$(findstring MINGW,$(OS)))
 override OS=WINNT
 endif
 
-#keep these if statements separate
-ifeq ($(OS), WINNT)
-SHLIB_EXT = dll
-SONAME_FLAG = -soname
-CFLAGS_add += -nodefaultlibs
-shlibdir = $(bindir)
-else
-ifeq ($(OS), Darwin)
-SHLIB_EXT = dylib
-SONAME_FLAG = -install_name
-else
 SHLIB_EXT = so
 SONAME_FLAG = -soname
-endif
 CFLAGS_add += -fPIC
 shlibdir = $(libdir)
-endif
 
 # Add `-march` to our CFLAGS if it's defined
 ifneq ($(MARCH),)

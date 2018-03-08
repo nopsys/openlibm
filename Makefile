@@ -30,21 +30,8 @@ OBJS =  $(patsubst %.f,%.f.o,\
 	$(patsubst %.S,%.S.o,\
 	$(patsubst %.c,%.c.o,$(filter-out $(addprefix src/,$(DUPLICATE_SRCS)),$(SRCS)))))
 
-# If we're on windows, don't do versioned shared libraries. Also, generate an import library
-# for the DLL. If we're on OSX, put the version number before the .dylib.  Otherwise,
-# put it after.
-ifeq ($(OS), WINNT)
-OLM_MAJOR_MINOR_SHLIB_EXT := $(SHLIB_EXT)
-LDFLAGS_add += -Wl,--out-implib,libopenlibm.$(OLM_MAJOR_MINOR_SHLIB_EXT).a
-else
-ifeq ($(OS), Darwin)
-OLM_MAJOR_MINOR_SHLIB_EXT := $(SOMAJOR).$(SOMINOR).$(SHLIB_EXT)
-OLM_MAJOR_SHLIB_EXT := $(SOMAJOR).$(SHLIB_EXT)
-else
 OLM_MAJOR_MINOR_SHLIB_EXT := $(SHLIB_EXT).$(SOMAJOR).$(SOMINOR)
 OLM_MAJOR_SHLIB_EXT := $(SHLIB_EXT).$(SOMAJOR)
-endif
-endif
 
 .PHONY: all check test clean distclean \
 	install install-static install-shared install-pkgconfig install-headers
@@ -60,10 +47,8 @@ libopenlibm.a: $(OBJS)
 
 libopenlibm.$(OLM_MAJOR_MINOR_SHLIB_EXT): $(OBJS)
 	$(CC) -shared $(OBJS) $(LDFLAGS) $(LDFLAGS_add) -Wl,$(SONAME_FLAG),libopenlibm.$(OLM_MAJOR_SHLIB_EXT) -o $@
-ifneq ($(OS),WINNT)
 	ln -sf $@ libopenlibm.$(OLM_MAJOR_SHLIB_EXT)
 	ln -sf $@ libopenlibm.$(SHLIB_EXT)
-endif
 
 test/test-double: libopenlibm.$(OLM_MAJOR_MINOR_SHLIB_EXT)
 	$(MAKE) -C test test-double
