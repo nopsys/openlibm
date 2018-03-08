@@ -11,8 +11,6 @@
  * ====================================================
  */
 
-#include <assert.h>
-
 #include "cdefs-compat.h"
 //__FBSDID("$FreeBSD: src/lib/msun/src/e_j0.c,v 1.9 2008/02/22 02:30:35 das Exp $");
 
@@ -279,7 +277,7 @@ static const double pS2[5] = {
 	int32_t ix;
 	GET_HIGH_WORD(ix,x);
 	ix &= 0x7fffffff;
-        assert(ix>=0x40000000 && ix<=0x48000000);
+        //assert(ix>=0x40000000 && ix<=0x48000000);
 	if(ix>=0x40200000)     {p = pR8; q= pS8;}
 	else if(ix>=0x40122E8B){p = pR5; q= pS5;}
 	else if(ix>=0x4006DB6D){p = pR3; q= pS3;}
@@ -376,7 +374,7 @@ static const double qS2[6] = {
 	int32_t ix;
 	GET_HIGH_WORD(ix,x);
 	ix &= 0x7fffffff;
-        assert(ix>=0x40000000 && ix<=0x48000000);
+        //assert(ix>=0x40000000 && ix<=0x48000000);
 	if(ix>=0x40200000)     {p = qR8; q= qS8;}
 	else if(ix>=0x40122E8B){p = qR5; q= qS5;}
 	else if(ix>=0x4006DB6D){p = qR3; q= qS3;}
