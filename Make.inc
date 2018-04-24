@@ -21,21 +21,6 @@ else
 pkgconfigdir = $(libdir)/pkgconfig
 endif
 
-USEGCC = 1
-USECLANG = 0
-
-ifeq ($(OS), Darwin)
-USEGCC = 0
-USECLANG = 1
-endif
-
-ifeq ($(OS), FreeBSD)
-USEGCC = 0
-USECLANG = 1
-endif
-
-AR = /Users/guidochari/opt/cross/bin/x86_64-elf-ar
-
 ifeq ($(USECLANG),1)
 USEGCC = 0
 CC = clang
@@ -43,8 +28,7 @@ CFLAGS_add += -fno-builtin -fno-strict-aliasing
 endif
 
 ifeq ($(USEGCC),1)
-CC = /Users/guidochari/opt/cross/bin/x86_64-elf-gcc
-CFLAGS_add += -fno-gnu89-inline -fno-builtin -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector -fno-stack-protector
+CFLAGS_add += -fno-gnu89-inline -fno-builtin -fno-stack-protector
 endif
 
 ARCH ?= $(shell $(CC) -dumpmachine | sed "s/\([^-]*\).*$$/\1/")
@@ -111,7 +95,7 @@ CFLAGS_add  += $(CFLAGS_arch)
 SFLAGS_add  += $(SFLAGS_arch)
 LDFLAGS_add += $(LDFLAGS_arch)
 
-CFLAGS_add += -std=c99 -Wall -I$(OPENLIBM_HOME) -I$(OPENLIBM_HOME)/include -I$(OPENLIBM_HOME)/$(ARCH) -I$(OPENLIBM_HOME)/src -DASSEMBLER -D__BSD_VISIBLE -Wno-implicit-function-declaration
+CFLAGS_add += -std=c99 -Wall -I$(OPENLIBM_HOME) -I$(OPENLIBM_HOME)/include -I$(LOCALLIBC) -I$(OPENLIBM_HOME)/$(ARCH) -I$(OPENLIBM_HOME)/src -DASSEMBLER -D__BSD_VISIBLE -Wno-implicit-function-declaration
 ifneq ($(filter $(ARCH),i387 amd64 powerpc),)
 CFLAGS_add += -I$(OPENLIBM_HOME)/ld80
 else

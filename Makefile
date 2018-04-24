@@ -1,4 +1,5 @@
 OPENLIBM_HOME=$(abspath .)
+include ../../../nopsys/compilation.conf
 include ./Make.inc
 
 SUBDIRS = src $(ARCH) bsdsrc
